@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser & System Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .download-btn {
+            display: block;
+            margin: 0 auto 30px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .info-row:hover {
+            background: #e9ecef;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .info-value {
+            color: #212529;
+            word-break: break-word;
+        }
+
+        .user-agent {
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Browser & System Information</h1>
+        
+        <button class="download-btn" onclick="downloadReport()">Download Report</button>
+
+        <div class="section">
+            <div class="section-title">Browser Details</div>
+            <div class="info-grid">
+                <div class="info-row">
+                    <div class="info-label">Browser Name</div>
+                    <div class="info-value" id="browserName"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Browser Version</div>
+                    <div class="info-value" id="browserVersion"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">User Agent</div>
+                    <div class="info-value user-agent" id="userAgent"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Cookies Enabled</div>
+                    <div class="info-value" id="cookiesEnabled"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Do Not Track</div>
+                    <div class="info-value" id="doNotTrack"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Online Status</div>
+                    <div class="info-value" id="onlineStatus"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">System Details</div>
+            <div class="info-grid">
+                <div class="info-row">
+                    <div class="info-label">Operating System</div>
+                    <div class="info-value" id="os"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Platform</div>
+                    <div class="info-value" id="platform"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">CPU Cores</div>
+                    <div class="info-value" id="cpuCores"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Device Memory</div>
+                    <div class="info-value" id="deviceMemory"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Display & Locale</div>
+            <div class="info-grid">
+                <div class="info-row">
+                    <div class="info-label">Screen Resolution</div>
+                    <div class="info-value" id="screenResolution"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Viewport Size</div>
+                    <div class="info-value" id="viewportSize"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Color Depth</div>
+                    <div class="info-value" id="colorDepth"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Pixel Ratio</div>
+                    <div class="info-value" id="pixelRatio"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Language</div>
+                    <div class="info-value" id="language"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Languages</div>
+                    <div class="info-value" id="languages"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Timezone</div>
+                    <div class="info-value" id="timezone"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Timezone Offset</div>
+                    <div class="info-value" id="timezoneOffset"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Detect browser name and version
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browserName = 'Unknown';
+            let browserVersion = 'Unknown';
+
+            if (ua.indexOf('Firefox') > -1) {
+                browserName = 'Firefox';
+                browserVersion = ua.match(/Firefox\/([0-9.]+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Edg') > -1) {
+                browserName = 'Edge';
+                browserVersion = ua.match(/Edg\/([0-9.]+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Chrome') > -1) {
+                browserName = 'Chrome';
+                browserVersion = ua.match(/Chrome\/([0-9.]+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Safari') > -1) {
+                browserName = 'Safari';
+                browserVersion = ua.match(/Version\/([0-9.]+)/)?.[1] || 'Unknown';
+            } else if (ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1) {
+                browserName = 'Opera';
+                browserVersion = ua.match(/(?:Opera|OPR)\/([0-9.]+)/)?.[1] || 'Unknown';
+            }
+
+            return { browserName, browserVersion };
+        }
+
+        // Detect operating system
+        function getOS() {
+            const ua = navigator.userAgent;
+            if (ua.indexOf('Win') > -1) return 'Windows';
+            if (ua.indexOf('Mac') > -1) return 'macOS';
+            if (ua.indexOf('Linux') > -1) return 'Linux';
+            if (ua.indexOf('Android') > -1) return 'Android';
+            if (ua.indexOf('iOS') > -1 || ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) return 'iOS';
+            return 'Unknown';
+        }
+
+        // Update all information
+        function updateInfo() {
+            const { browserName, browserVersion } = getBrowserInfo();
+
+            document.getElementById('browserName').textContent = browserName;
+            document.getElementById('browserVersion').textContent = browserVersion;
+            document.getElementById('userAgent').textContent = navigator.userAgent;
+            document.getElementById('cookiesEnabled').textContent = navigator.cookieEnabled ? 'Yes' : 'No';
+            document.getElementById('doNotTrack').textContent = navigator.doNotTrack || 'Not set';
+            document.getElementById('onlineStatus').textContent = navigator.onLine ? 'Online' : 'Offline';
+
+            document.getElementById('os').textContent = getOS();
+            document.getElementById('platform').textContent = navigator.platform;
+            document.getElementById('cpuCores').textContent = navigator.hardwareConcurrency || 'Unknown';
+            document.getElementById('deviceMemory').textContent = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Unknown';
+
+            document.getElementById('screenResolution').textContent = `${screen.width} × ${screen.height}`;
+            document.getElementById('viewportSize').textContent = `${window.innerWidth} × ${window.innerHeight}`;
+            document.getElementById('colorDepth').textContent = `${screen.colorDepth}-bit`;
+            document.getElementById('pixelRatio').textContent = window.devicePixelRatio;
+            document.getElementById('language').textContent = navigator.language;
+            document.getElementById('languages').textContent = navigator.languages.join(', ');
+            document.getElementById('timezone').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('timezoneOffset').textContent = `UTC${new Date().getTimezoneOffset() <= 0 ? '+' : ''}${-new Date().getTimezoneOffset() / 60}`;
+        }
+
+        // Download report as text file
+        function downloadReport() {
+            const { browserName, browserVersion } = getBrowserInfo();
+            const timestamp = new Date().toLocaleString();
+            
+            const report = `BROWSER & SYSTEM INFORMATION REPORT
+Generated: ${timestamp}
+
+═══════════════════════════════════════════════════════════════
+
+BROWSER DETAILS
+───────────────────────────────────────────────────────────────
+Browser Name:          ${browserName}
+Browser Version:       ${browserVersion}
+User Agent:            ${navigator.userAgent}
+Cookies Enabled:       ${navigator.cookieEnabled ? 'Yes' : 'No'}
+Do Not Track:          ${navigator.doNotTrack || 'Not set'}
+Online Status:         ${navigator.onLine ? 'Online' : 'Offline'}
+
+SYSTEM DETAILS
+───────────────────────────────────────────────────────────────
+Operating System:      ${getOS()}
+Platform:              ${navigator.platform}
+CPU Cores:             ${navigator.hardwareConcurrency || 'Unknown'}
+Device Memory:         ${navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Unknown'}
+
+DISPLAY & LOCALE
+───────────────────────────────────────────────────────────────
+Screen Resolution:     ${screen.width} × ${screen.height}
+Viewport Size:         ${window.innerWidth} × ${window.innerHeight}
+Color Depth:           ${screen.colorDepth}-bit
+Pixel Ratio:           ${window.devicePixelRatio}
+Language:              ${navigator.language}
+Languages:             ${navigator.languages.join(', ')}
+Timezone:              ${Intl.DateTimeFormat().resolvedOptions().timeZone}
+Timezone Offset:       UTC${new Date().getTimezoneOffset() <= 0 ? '+' : ''}${-new Date().getTimezoneOffset() / 60}
+
+═══════════════════════════════════════════════════════════════
+End of Report
+`;
+
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `browser-info-${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Update on load
+        updateInfo();
+
+        // Update viewport size on resize
+        window.addEventListener('resize', () => {
+            document.getElementById('viewportSize').textContent = `${window.innerWidth} × ${window.innerHeight}`;
+        });
+
+        // Update online status
+        window.addEventListener('online', () => {
+            document.getElementById('onlineStatus').textContent = 'Online';
+        });
+
+        window.addEventListener('offline', () => {
+            document.getElementById('onlineStatus').textContent = 'Offline';
+        });
+    </script>
+</body>
+</html>
